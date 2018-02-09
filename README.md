@@ -3,7 +3,7 @@
 **HINT: Project use GitFlow (https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
 Short: Current development is done in "develop" branch and "master" includes the current release!**
 
-##"Another" Sense Hat driver for Android Things
+## "Another" Sense Hat driver for Android Things
 This driver connects the "[SenseHat](https://www.raspberrypi.org/products/sense-hat/)" with AndroidThings environment.  
 
 It includes the following features:
@@ -14,7 +14,7 @@ It includes the following features:
 - [ ] OPEN: other sensors
 
 
-##How to use
+## How to use
 Include the "SenseHatDriverLibrary" to your AndroidThings project.
 
 *settings.gradle*
@@ -39,10 +39,10 @@ Include the "SenseHatDriverLibrary" to your AndroidThings project.
 
 ````
 
-##Version overview
+## Version overview
 - V1.0: Initial release 
 
-##Other resources
+## Other resources
 - AndroidThings Homepage: https://developer.android.com/things/index.html
 - "offical" AndroidThings SenseHatDriver: https://github.com/androidthings/contrib-drivers/blob/master/sensehat/README.md
 - SenseHat: https://www.raspberrypi.org/products/sense-hat/
