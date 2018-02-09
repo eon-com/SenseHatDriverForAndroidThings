@@ -1,4 +1,4 @@
-#SenseHat Driver for AndoridThings
+# SenseHat Driver for AndoridThings
 
 **HINT: Project use GitFlow (https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
 Short: Current development is done in "develop" branch and "master" includes the current release!**
