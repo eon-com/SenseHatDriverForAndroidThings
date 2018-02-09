@@ -22,7 +22,7 @@ Include the "SenseHatDriverLibrary" to your AndroidThings project.
     include ':sensehatdriverdemo', ':sensehatdriverlibrary'
 ````
 
-*HomeActicity.java*
+*HomeActivity.java*
 ````
     SensorManager sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
 
