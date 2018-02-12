@@ -41,6 +41,8 @@ Include the "SenseHatDriverLibrary" to your AndroidThings project.
 
 ## Version overview
 - V1.0: Initial release 
+- V1.1: Added UI, moved Demos to Demo-Project, some cleanups
+        
 
 ## Other resources
 - AndroidThings Homepage: https://developer.android.com/things/index.html

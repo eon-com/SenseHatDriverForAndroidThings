@@ -1,4 +1,4 @@
-package com.eon.androidthings.sensehatdriverlibrary.demos;
+package com.eon.androidthinks.sensehat.demos;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
