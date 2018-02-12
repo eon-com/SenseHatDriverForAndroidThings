@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.eon.androidthinks.sensehat">
+
+    <!-- needed for allowing to access the internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- needed for allowing GcsCloudConnector to generate a certficate and store in file -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- needed for allowing to read sensors i.e humidity, temperature -->
+    <uses-permission android:name="com.google.android.things.permission.MANAGE_SENSOR_DRIVERS" />
+
+    <!-- needed for allowing bluetooth communication -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+    <uses-permission android:name="com.google.android.things.permission.MANAGE_BLUETOOTH" />
+
+
+
+    <application>
+        <uses-library android:name="com.google.android.things" />
+
+        <activity android:name="com.eon.androidthinks.sensehat.HomeActivity">
+            <!-- Launch activity as default from Android Studio -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Launch activity automatically on boot -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.IOT_LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

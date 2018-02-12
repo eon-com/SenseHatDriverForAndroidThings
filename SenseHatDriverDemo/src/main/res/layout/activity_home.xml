@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.eon.androidthinks.sensehat.HomeActivity">
+
+    <TextView
+        android:id="@+id/ipAdressTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="myIP" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="WELCOME to Android Thinks - Demo V3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="******************************************************************" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_below="@+id/cursorColorTextView"
+        android:layout_toEndOf="@+id/textView2"
+        android:text="Cursor position:"
+
+        />
+
+    <TextView
+        android:id="@+id/cursorCoordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/cursorColorTextView"
+        android:layout_below="@+id/textView2"
+        android:text="X/Y"
+
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Cursor color:"
+
+        />
+
+    <TextView
+        android:id="@+id/cursorColorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView"
+        android:layout_below="@+id/cursorCoordTextView"
+        android:text="RED" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Temperature:" />
+
+    <TextView
+        android:id="@+id/temperatureTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="28Grad" />
+
+
+</LinearLayout>
