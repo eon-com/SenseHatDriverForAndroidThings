@@ -1,5 +1,6 @@
 package com.eon.androidthinks.sensehat.uitils;
 
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collections;
@@ -27,7 +28,8 @@ public class NetworkUtils {
                     if (!addr.isLoopbackAddress()) {
                         String sAddr = addr.getHostAddress();
                         //boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
-                        boolean isIPv4 = sAddr.indexOf(':') < 0;
+//                        boolean isIPv4 = sAddr.indexOf(':') < 0;
+                        boolean isIPv4 = addr instanceof Inet4Address;
 
                         if (useIPv4) {
                             if (isIPv4)
