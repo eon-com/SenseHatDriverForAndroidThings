@@ -42,6 +42,7 @@ Include the "SenseHatDriverLibrary" to your AndroidThings project.
 ## Version overview
 - V1.0: Initial release 
 - V1.1: Added UI, moved Demos to Demo-Project, some cleanups
+- V1.2: Added LED Matrix Text-Feature, see TextScrollDemo 
         
 
 ## Other resources
