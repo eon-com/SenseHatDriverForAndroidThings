@@ -65,10 +65,7 @@ public class Joystick {
                             for (JoystickListener listener : Joystick.this.listeners) {
                                 listener.stickMoved(direction);
                             }
-
-                            System.out.println(joyState);
-
-
+//                            System.out.println(joyState);
                         }
                         Thread.sleep(POLLING_TIME);
                     } catch (Exception e) {

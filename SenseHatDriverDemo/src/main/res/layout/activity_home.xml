@@ -19,7 +19,7 @@
         android:layout_height="15dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="WELCOME to Android Thinks - Demo V3"
+        android:text="WELCOME to Android Thinks - Demo V4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

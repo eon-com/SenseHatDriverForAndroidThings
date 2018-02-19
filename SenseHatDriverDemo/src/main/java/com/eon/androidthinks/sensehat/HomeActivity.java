@@ -2,24 +2,18 @@ package com.eon.androidthinks.sensehat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.eon.androidthings.sensehatdriverlibrary.SenseHat;
-import com.eon.androidthings.sensehatdriverlibrary.devices.JoystickDirectionEnum;
-import com.eon.androidthings.sensehatdriverlibrary.devices.JoystickListener;
+import com.eon.androidthings.sensehatdriverlibrary.devices.LedMatrix;
 import com.eon.androidthinks.sensehat.demos.JoystickDemo;
-import com.eon.androidthinks.sensehat.gui.IGui;
+import com.eon.androidthinks.sensehat.demos.TextScrollDemo;
 import com.eon.androidthinks.sensehat.uitils.NetworkUtils;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-
-import java.io.IOException;
 
 /**
  * Skeleton of an Android Things activity.
@@ -43,6 +37,8 @@ import java.io.IOException;
 public class HomeActivity extends Activity {
 
     private JoystickDemo joystickDemo;
+    private TextScrollDemo textScrollDemo;
+
     private TextView cursorCoordTextView;
     private TextView cursorColorTextView;
     private TextView ipAdressTextView;
@@ -67,68 +63,71 @@ public class HomeActivity extends Activity {
             this.ipAdressTextView.setText(myIP);
             System.out.println("**** myIP:" + myIP);
 
+
+            // ********************
             SensorManager sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
-//            SenseHat senseHat = new SenseHat(sensorManager);
-//            final LedMatrix ledMatrix = senseHat.getLedMatrix();
-//            ledMatrix.draw(Color.BLACK);    // trun off
+            SenseHat senseHat = SenseHat.init(sensorManager);
+            final LedMatrix ledMatrix = senseHat.getLedMatrix();
+            ledMatrix.draw(Color.RED);    // trun off
 
 
-            this.joystickDemo = new JoystickDemo(sensorManager, new IGui() {
-                @Override
-                public void setCursorInformations(final String xCoord, final String yCoord, final String color)
+            /** Text-Scrolling
+             */
+            this.textScrollDemo = new TextScrollDemo(sensorManager, this.getAssets());
 
-                {
+            /** Simple Joystick demo
+             this.joystickDemo = new JoystickDemo(sensorManager, new IGui() {
+            @Override public void setCursorInformations(final String xCoord, final String yCoord, final String color)
 
-                    HomeActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            String coord = xCoord + "/" + yCoord;
-                            HomeActivity.this.cursorCoordTextView.setText(coord);
-                            HomeActivity.this.cursorColorTextView.setText(color);
-                        }
-                    });
+            {
 
-
-                }
+            HomeActivity.this.runOnUiThread(new Runnable() {
+            @Override public void run() {
+            String coord = xCoord + "/" + yCoord;
+            HomeActivity.this.cursorCoordTextView.setText(coord);
+            HomeActivity.this.cursorColorTextView.setText(color);
+            }
             });
 
-            SenseHat.getInstance().addJoystickListener(new JoystickListener() {
-                @Override
-                public void stickMoved(JoystickDirectionEnum direction) throws IOException {
-                    if (direction == JoystickDirectionEnum.BUTTON_PRESSED){
-                        try {
-                            MqttClient client = new MqttClient(//
-                                    "tcp://iot.eclipse.org:1883",//
-                                    "JavaSample",//
-                                    new MemoryPersistence());
-//                client.setCallback(this);
-                            client.connect();
+            }
+            });
+             */
 
-                            MqttMessage message = new MqttMessage("Grüsse von AT".getBytes());
-                            client.publish("MQTT Examples",message );
-                            client.disconnect();
-                            client.close();
-                        } catch (MqttException e) {
-                            e.printStackTrace();
-                            final String ex = ExceptionUtils.getStackTrace(e);
-                            HomeActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    exceptionTextView.setText(ex);
-                                }
-                            });
+            /** MQTT ...work in progress...
+             SenseHat.getInstance().addJoystickListener(new JoystickListener() {
+            @Override public void stickMoved(JoystickDirectionEnum direction) throws IOException {
+            if (direction == JoystickDirectionEnum.BUTTON_PRESSED) {
+            try {
+            MqttClient client = new MqttClient(//
+            "tcp://iot.eclipse.org:1883",//
+            "JavaSample",//
+            new MemoryPersistence());
+            //                client.setCallback(this);
+            client.connect();
 
-                        }
-                    }
-                }
+            MqttMessage message = new MqttMessage("Grüsse von AT".getBytes());
+            client.publish("MQTT Examples", message);
+            client.disconnect();
+            client.close();
+            } catch (MqttException e) {
+            e.printStackTrace();
+            final String ex = ExceptionUtils.getStackTrace(e);
+            HomeActivity.this.runOnUiThread(new Runnable() {
+            @Override public void run() {
+            HomeActivity.this.exceptionTextView.setText(ex);
+            }
             });
 
+            }
+            }
+            }
+            });
+             */
         } catch (Exception e) {
             // TODO Exception Handling
             e.printStackTrace();
             String ex = ExceptionUtils.getStackTrace(e);
-            exceptionTextView.setText(ex);
-
+            this.exceptionTextView.setText(ex);
         }
     }
 

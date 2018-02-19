@@ -43,7 +43,7 @@ public class JoystickDemo {
         senseHat.addJoystickListener(new JoystickListener() {
             @Override
             public void stickMoved(JoystickDirectionEnum direction) throws IOException {
-                System.out.println("moved:" + direction);
+                //System.out.println("moved:" + direction);
                 int currentColor = -1;
                 switch (direction) {
                     case IDLE:
