@@ -1,4 +1,4 @@
-# SenseHat Driver for AndoridThings
+# SenseHat Driver for AndroidThings
 
 **HINT: Project use GitFlow (https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
 Short: Current development is done in "develop" branch and "master" includes the current release!**
@@ -8,7 +8,7 @@ This driver connects the "[SenseHat](https://www.raspberrypi.org/products/sense-
 
 It includes the following features:
 
-- [x] LED 8x8 Matrix: draw pixels in differnt colors
+- [x] LED 8x8 Matrix: draw pixels in differnt colors; draw text in differnt colors
 - [x] Joystick: detects movement and button press
 - [x] Temperature and Humidity: reads temperature and humidity
 - [ ] OPEN: other sensors
@@ -40,9 +40,9 @@ Include the "SenseHatDriverLibrary" to your AndroidThings project.
 ````
 
 ## Version overview
-- V1.0: Initial release 
-- V1.1: Added UI, moved Demos to Demo-Project, some cleanups
 - V1.2: Added LED Matrix Text-Feature, see TextScrollDemo 
+- V1.1: Added UI, moved Demos to Demo-Project, some cleanups
+- V1.0: Initial release 
         
 
 ## Other resources
