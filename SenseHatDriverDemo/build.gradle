@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.eon.androidthinks.myfirstapp"
+        applicationId "com.eon.androidthings.sensehat"
         minSdkVersion 26
         targetSdkVersion 26
         versionCode 1

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eon.androidthinks.sensehat">
+    package="com.eon.androidthings.sensehat">
 
     <!-- needed for allowing to access the internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -29,7 +29,7 @@
     <application>
         <uses-library android:name="com.google.android.things" />
 
-        <activity android:name="com.eon.androidthinks.sensehat.HomeActivity">
+        <activity android:name="com.eon.androidthings.sensehat.HomeActivity">
             <!-- Launch activity as default from Android Studio -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

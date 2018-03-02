@@ -1,4 +1,4 @@
-package com.eon.androidthinks.sensehat.uitils;
+package com.eon.androidthings.sensehat.uitils;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;

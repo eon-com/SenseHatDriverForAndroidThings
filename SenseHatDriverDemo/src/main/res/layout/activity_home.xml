@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eon.androidthinks.sensehat.HomeActivity">
+    tools:context="com.eon.androidthings.sensehat.HomeActivity">
 
     <TextView
         android:id="@+id/ipAdressTextView"
@@ -16,10 +16,10 @@
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="20dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="WELCOME to Android Thinks - Demo V4"
+        android:text="WELCOME to Android Things - Demo V1.3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -76,7 +76,19 @@
         android:id="@+id/temperatureTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="28Grad" />
+        android:text="Temperature" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Humidity:" />
+
+    <TextView
+        android:id="@+id/humidityTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Humidity" />
 
     <TextView
         android:id="@+id/exceptionTextView"

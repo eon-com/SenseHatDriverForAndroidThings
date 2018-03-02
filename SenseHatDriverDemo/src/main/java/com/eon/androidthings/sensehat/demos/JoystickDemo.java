@@ -1,4 +1,4 @@
-package com.eon.androidthinks.sensehat.demos;
+package com.eon.androidthings.sensehat.demos;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -8,7 +8,7 @@ import com.eon.androidthings.sensehatdriverlibrary.SenseHat;
 import com.eon.androidthings.sensehatdriverlibrary.devices.JoystickDirectionEnum;
 import com.eon.androidthings.sensehatdriverlibrary.devices.JoystickListener;
 import com.eon.androidthings.sensehatdriverlibrary.devices.LedMatrix;
-import com.eon.androidthinks.sensehat.gui.IGui;
+import com.eon.androidthings.sensehat.gui.IGui;
 
 import java.io.IOException;
 

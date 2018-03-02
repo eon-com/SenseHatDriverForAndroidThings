@@ -1,4 +1,4 @@
-package com.eon.androidthinks.sensehat.gui;
+package com.eon.androidthings.sensehat.gui;
 
 /**
  * TODO Description

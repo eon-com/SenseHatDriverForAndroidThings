@@ -69,8 +69,8 @@ public class HumidityTemperatureSensorDriver implements AutoCloseable {
         });
 
         // Ist es evtl. ein reihenfolge problem???
-        this.registerHumiditySensor();
         this.registerTemperatureSensor();
+        this.registerHumiditySensor();
 
     }
 
