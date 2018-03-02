@@ -1,4 +1,4 @@
-package com.eon.androidthinks.sensehat;
+package com.eon.androidthings.sensehat;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.eon.androidthinks.myfirstapp", appContext.getPackageName());
+        assertEquals("com.eon.androidthings.sensehat", appContext.getPackageName());
     }
 }

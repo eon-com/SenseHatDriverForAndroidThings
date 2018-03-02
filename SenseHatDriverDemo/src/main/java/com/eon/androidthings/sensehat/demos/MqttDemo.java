@@ -1,4 +1,4 @@
-package com.eon.androidthinks.sensehat.demos;
+package com.eon.androidthings.sensehat.demos;
 
 /**
  * TODO Description

@@ -1,4 +1,4 @@
-package com.eon.androidthinks.sensehat.demos;
+package com.eon.androidthings.sensehat.demos;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -21,7 +21,7 @@ public class TextScrollDemo {
     public TextScrollDemo(final SensorManager sensorManager, final AssetManager assetmanager) throws IOException {
 
         //SenseHat.init(sensorManager);
-//        final LEDFont font = new ColorFont(assetmanager);
+ //      final LEDFont font = new MultiColorFont(assetmanager);
         final LEDFont font = new BlackWhiteFont(assetmanager);
 
         // Draw one letter on the LED Matrix
@@ -35,7 +35,7 @@ public class TextScrollDemo {
                 try {
                     do {
                         // TODO At the moment only uppercase letters are working
-                        Bitmap sentenceBitmap = font.getBitmapForSentence(" HELLO WORLD ");
+                        Bitmap sentenceBitmap = font.getBitmapForSentence(" HELLO RASPI ");
                         Bitmap targetBitmap = Bitmap.createBitmap(//
                                 LedMatrix.WIDTH,//
                                 LedMatrix.HEIGHT, //

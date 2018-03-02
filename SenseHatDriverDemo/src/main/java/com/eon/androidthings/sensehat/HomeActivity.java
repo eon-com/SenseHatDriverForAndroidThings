@@ -1,17 +1,20 @@
-package com.eon.androidthinks.sensehat;
+package com.eon.androidthings.sensehat;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.eon.androidthings.sensehatdriverlibrary.SenseHat;
 import com.eon.androidthings.sensehatdriverlibrary.devices.LedMatrix;
-import com.eon.androidthinks.sensehat.demos.JoystickDemo;
-import com.eon.androidthinks.sensehat.demos.TextScrollDemo;
-import com.eon.androidthinks.sensehat.uitils.NetworkUtils;
+import com.eon.androidthings.sensehat.demos.JoystickDemo;
+import com.eon.androidthings.sensehat.demos.TextScrollDemo;
+import com.eon.androidthings.sensehat.uitils.NetworkUtils;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -44,6 +47,9 @@ public class HomeActivity extends Activity {
     private TextView ipAdressTextView;
     private TextView exceptionTextView;
 
+    private TextView tempTextView;
+    private TextView humTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +63,8 @@ public class HomeActivity extends Activity {
             this.cursorColorTextView = this.findViewById(R.id.cursorColorTextView);
             this.ipAdressTextView = this.findViewById(R.id.ipAdressTextView);
             this.exceptionTextView = this.findViewById(R.id.exceptionTextView);
+            this.tempTextView = this.findViewById(R.id.temperatureTextView);
+            this.humTextView = this.findViewById(R.id.humidityTextView);
 
 
             String myIP = "********************** IP: " + NetworkUtils.getIPAddress(true) + " **********************";
@@ -74,6 +82,39 @@ public class HomeActivity extends Activity {
             /** Text-Scrolling
              */
             this.textScrollDemo = new TextScrollDemo(sensorManager, this.getAssets());
+
+            /**
+             * Humidity and temperature demo...
+             */
+            SensorEventListener temperatureListener = new SensorEventListener() {
+                @Override
+                public void onSensorChanged(SensorEvent event) {
+                    if(event.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
+                        tempTextView.setText(event.values[0] + " °C");
+                    }
+                }
+
+                @Override
+                public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                    if(sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
+                        System.out.println("TEMP-ACUU:" + sensor + " acc:''" + accuracy);
+                    }
+                }
+            };
+
+            SensorEventListener humidityListener = new SensorEventListener() {
+                @Override
+                public void onSensorChanged(SensorEvent event) {
+                    humTextView.setText(event.values[0] + " %");
+                }
+
+                @Override
+                public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                    System.out.println("HUM-ACUU:" + sensor + " acc:''" + accuracy);
+                }
+            };
+
+            senseHat.addHumidityTempatureSensorListener(humidityListener, temperatureListener);
 
             /** Simple Joystick demo
              this.joystickDemo = new JoystickDemo(sensorManager, new IGui() {
@@ -93,38 +134,7 @@ public class HomeActivity extends Activity {
             });
              */
 
-            /** MQTT ...work in progress...
-             SenseHat.getInstance().addJoystickListener(new JoystickListener() {
-            @Override public void stickMoved(JoystickDirectionEnum direction) throws IOException {
-            if (direction == JoystickDirectionEnum.BUTTON_PRESSED) {
-            try {
-            MqttClient client = new MqttClient(//
-            "tcp://iot.eclipse.org:1883",//
-            "JavaSample",//
-            new MemoryPersistence());
-            //                client.setCallback(this);
-            client.connect();
-
-            MqttMessage message = new MqttMessage("Grüsse von AT".getBytes());
-            client.publish("MQTT Examples", message);
-            client.disconnect();
-            client.close();
-            } catch (MqttException e) {
-            e.printStackTrace();
-            final String ex = ExceptionUtils.getStackTrace(e);
-            HomeActivity.this.runOnUiThread(new Runnable() {
-            @Override public void run() {
-            HomeActivity.this.exceptionTextView.setText(ex);
-            }
-            });
-
-            }
-            }
-            }
-            });
-             */
         } catch (Exception e) {
-            // TODO Exception Handling
             e.printStackTrace();
             String ex = ExceptionUtils.getStackTrace(e);
             this.exceptionTextView.setText(ex);
