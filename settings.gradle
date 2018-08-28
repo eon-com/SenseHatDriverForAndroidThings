@@ -1,1 +1,1 @@
-include ':sensehatdriverdemo', ':sensehatdriverlibrary'
+include ':SenseHatDriverDemo', ':SenseHatDriverLibrary'
