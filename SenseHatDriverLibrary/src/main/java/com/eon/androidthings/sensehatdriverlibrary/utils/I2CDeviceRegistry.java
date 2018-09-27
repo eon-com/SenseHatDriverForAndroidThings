@@ -1,7 +1,7 @@
 package com.eon.androidthings.sensehatdriverlibrary.utils;
 
 import com.google.android.things.pio.I2cDevice;
-import com.google.android.things.pio.PeripheralManagerService;
+import com.google.android.things.pio.PeripheralManager;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,8 +32,8 @@ public class I2CDeviceRegistry {
     public static I2cDevice openOrReUseDevice(int i2cAddress) throws IOException {
         I2cDevice i2cDevice = registry.get(i2cAddress);
         if (i2cDevice == null) {
-            PeripheralManagerService peripheralManagerService = new PeripheralManagerService();
-            i2cDevice = peripheralManagerService.openI2cDevice(I2CDeviceRegistry.I2C_BUS_NAME, i2cAddress);
+            PeripheralManager peripheralManager = PeripheralManager.getInstance();
+            i2cDevice = peripheralManager.openI2cDevice(I2CDeviceRegistry.I2C_BUS_NAME, i2cAddress);
             registry.put(i2cAddress, i2cDevice);
         }
         return i2cDevice;

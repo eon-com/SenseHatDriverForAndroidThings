@@ -10,6 +10,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.eon.androidthings.sensehat.gui.IGui;
 import com.eon.androidthings.sensehatdriverlibrary.SenseHat;
 import com.eon.androidthings.sensehatdriverlibrary.devices.LedMatrix;
 import com.eon.androidthings.sensehat.demos.JoystickDemo;
@@ -116,23 +117,24 @@ public class HomeActivity extends Activity {
 
             senseHat.addHumidityTempatureSensorListener(humidityListener, temperatureListener);
 
-            /** Simple Joystick demo
-             this.joystickDemo = new JoystickDemo(sensorManager, new IGui() {
-            @Override public void setCursorInformations(final String xCoord, final String yCoord, final String color)
+            /** Simple Joystick demo*/
+            this.joystickDemo = new JoystickDemo(sensorManager, new IGui() {
+                @Override
+                public void setCursorInformations(final String xCoord, final String yCoord, final String color)
 
-            {
+                {
 
-            HomeActivity.this.runOnUiThread(new Runnable() {
-            @Override public void run() {
-            String coord = xCoord + "/" + yCoord;
-            HomeActivity.this.cursorCoordTextView.setText(coord);
-            HomeActivity.this.cursorColorTextView.setText(color);
-            }
+                    HomeActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String coord = xCoord + "/" + yCoord;
+                            HomeActivity.this.cursorCoordTextView.setText(coord);
+                            HomeActivity.this.cursorColorTextView.setText(color);
+                        }
+                    });
+
+                }
             });
-
-            }
-            });
-             */
 
         } catch (Exception e) {
             e.printStackTrace();

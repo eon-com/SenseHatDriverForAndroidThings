@@ -5,9 +5,9 @@ import android.hardware.SensorManager;
 
 import com.eon.androidthings.sensehatdriverlibrary.utils.I2CDeviceRegistry;
 import com.google.android.things.pio.I2cDevice;
-import com.google.android.things.userdriver.UserSensor;
-import com.google.android.things.userdriver.UserSensorDriver;
-import com.google.android.things.userdriver.UserSensorReading;
+import com.google.android.things.userdriver.sensor.UserSensor;
+import com.google.android.things.userdriver.sensor.UserSensorDriver;
+import com.google.android.things.userdriver.sensor.UserSensorReading;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -17,7 +17,7 @@ import java.util.UUID;
  * TODO not implemented yet
  */
 
-public class AccelerometerSensorDriver extends UserSensorDriver implements AutoCloseable {
+public class AccelerometerSensorDriver implements AutoCloseable, UserSensorDriver {
 
     // TODO ANPASSEN an LSM9DS1		Accelerometer and Magnetometer
 
@@ -29,7 +29,6 @@ public class AccelerometerSensorDriver extends UserSensorDriver implements AutoC
     private static final float DRIVER_RESOLUTION = 0.004f;
     private static final float DRIVER_POWER = HumidityTemperatureSensor.MAX_POWER_CONSUMPTION_UA / 1000f;
     private static final int DRIVER_VERSION = 1;
-    private static final String DRIVER_REQUIRED_PERMISSION = "";
     private static final int DRIVER_MIN_DELAY_US = Math.round(1000000.0f / HumidityTemperatureSensor.MAX_FREQ_HZ);
     private static final int DRIVER_MAX_DELAY_US = Math.round(1000000.0f / HumidityTemperatureSensor.MIN_FREQ_HZ);
 
@@ -166,7 +165,6 @@ public class AccelerometerSensorDriver extends UserSensorDriver implements AutoC
                 .setResolution(DRIVER_RESOLUTION)
                 .setPower(DRIVER_POWER)
                 .setMinDelay(DRIVER_MIN_DELAY_US)
-                .setRequiredPermission(DRIVER_REQUIRED_PERMISSION)
                 .setMaxDelay(DRIVER_MAX_DELAY_US)
                 .setUuid(UUID.randomUUID())
                 .setDriver(this)
