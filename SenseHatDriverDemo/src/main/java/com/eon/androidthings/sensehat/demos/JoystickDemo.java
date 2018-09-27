@@ -32,7 +32,7 @@ public class JoystickDemo {
     public JoystickDemo(SensorManager sensorManager, IGui gui) throws IOException {
         this.gui = gui;
 
-        SenseHat senseHat = SenseHat.init(sensorManager);
+        SenseHat senseHat = SenseHat.getInstance();
 
         this.ledMatrix = senseHat.getLedMatrix();
         this.ledMatrix.draw(Color.RED);   // turn total of
