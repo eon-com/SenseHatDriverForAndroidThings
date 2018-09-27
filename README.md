@@ -40,12 +40,8 @@ Include the "SenseHatDriverLibrary" to your AndroidThings project.
 ````
 
 ## Version overview
-- V1.3: Added temperature and humidity to gui, changed/corrected apk name
-- V1.2: Added LED Matrix Text-Feature, see TextScrollDemo 
-- V1.1: Added UI, moved Demos to Demo-Project, some cleanups
-- V1.0: Initial release 
-        
-
+see Release-Page: https://github.com/EON-COM/SenseHatDriverForAndroidThings/releases
+  
 ## Other resources
 - AndroidThings Homepage: https://developer.android.com/things/index.html
 - "offical" AndroidThings SenseHatDriver: https://github.com/androidthings/contrib-drivers/blob/master/sensehat/README.md
