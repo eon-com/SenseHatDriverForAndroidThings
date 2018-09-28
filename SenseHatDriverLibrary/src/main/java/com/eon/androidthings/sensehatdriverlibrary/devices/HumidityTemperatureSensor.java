@@ -1,12 +1,13 @@
 package com.eon.androidthings.sensehatdriverlibrary.devices;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.VisibleForTesting;
 
 import com.eon.androidthings.sensehatdriverlibrary.utils.I2CDeviceRegistry;
 import com.google.android.things.pio.I2cDevice;
 
 import java.io.IOException;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.VisibleForTesting;
 
 /**
  * I2C  Address  0x5f: 		HTS221		Humidity/Temperature
