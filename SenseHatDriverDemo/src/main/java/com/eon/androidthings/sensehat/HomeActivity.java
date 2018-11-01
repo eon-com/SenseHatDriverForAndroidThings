@@ -118,7 +118,7 @@ public class HomeActivity extends Activity {
             senseHat.addHumidityTempatureSensorListener(humidityListener, temperatureListener);
 
             /** Simple Joystick demo*/
-            this.joystickDemo = new JoystickDemo(sensorManager, new IGui() {
+            this.joystickDemo = new JoystickDemo(new IGui() {
                 @Override
                 public void setCursorInformations(final String xCoord, final String yCoord, final String color)
 
