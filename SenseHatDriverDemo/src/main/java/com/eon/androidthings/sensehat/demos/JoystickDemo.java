@@ -2,13 +2,12 @@ package com.eon.androidthings.sensehat.demos;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.hardware.SensorManager;
 
+import com.eon.androidthings.sensehat.gui.IGui;
 import com.eon.androidthings.sensehatdriverlibrary.SenseHat;
 import com.eon.androidthings.sensehatdriverlibrary.devices.JoystickDirectionEnum;
 import com.eon.androidthings.sensehatdriverlibrary.devices.JoystickListener;
 import com.eon.androidthings.sensehatdriverlibrary.devices.LedMatrix;
-import com.eon.androidthings.sensehat.gui.IGui;
 
 import java.io.IOException;
 
@@ -29,7 +28,7 @@ public class JoystickDemo {
 
     private IGui gui;
 
-    public JoystickDemo(SensorManager sensorManager, IGui gui) throws IOException {
+    public JoystickDemo(IGui gui) throws IOException {
         this.gui = gui;
 
         SenseHat senseHat = SenseHat.getInstance();

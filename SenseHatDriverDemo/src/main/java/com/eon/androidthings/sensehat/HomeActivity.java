@@ -14,7 +14,7 @@ import com.eon.androidthings.sensehat.gui.IGui;
 import com.eon.androidthings.sensehatdriverlibrary.SenseHat;
 import com.eon.androidthings.sensehatdriverlibrary.devices.LedMatrix;
 import com.eon.androidthings.sensehat.demos.JoystickDemo;
-import com.eon.androidthings.sensehat.demos.TextScrollDemo;
+import com.eon.androidthings.sensehat.demos.LedDrawingDemo;
 import com.eon.androidthings.sensehat.uitils.NetworkUtils;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -41,7 +41,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public class HomeActivity extends Activity {
 
     private JoystickDemo joystickDemo;
-    private TextScrollDemo textScrollDemo;
+    private LedDrawingDemo ledDrawingDemo;
 
     private TextView cursorCoordTextView;
     private TextView cursorColorTextView;
@@ -82,7 +82,7 @@ public class HomeActivity extends Activity {
 
             /** Text-Scrolling
              */
-            this.textScrollDemo = new TextScrollDemo(sensorManager, this.getAssets());
+            this.ledDrawingDemo = new LedDrawingDemo(this);
 
             /**
              * Humidity and temperature demo...
@@ -118,7 +118,7 @@ public class HomeActivity extends Activity {
             senseHat.addHumidityTempatureSensorListener(humidityListener, temperatureListener);
 
             /** Simple Joystick demo*/
-            this.joystickDemo = new JoystickDemo(sensorManager, new IGui() {
+            this.joystickDemo = new JoystickDemo(new IGui() {
                 @Override
                 public void setCursorInformations(final String xCoord, final String yCoord, final String color)
 
