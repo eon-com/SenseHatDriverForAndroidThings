@@ -48,12 +48,9 @@ public class LedDrawingDemo {
                     do {
                         // Rotate iconBitmap a few times
                         for (int rotation = 0; rotation < 12; rotation++) {
-                            ledMatrix.setRotation(rotation);
-                            ledMatrix.draw(iconBitmap);
+                            ledMatrix.draw(iconBitmap, rotation);
                             Thread.sleep(500);
                         }
-                        // Reset rotation for the text scroll
-                        ledMatrix.setRotation(0);
                         // Scroll the text on screen.
                         for (int currentX = 0; currentX < sentenceBitmap.getWidth() - LedMatrix.WIDTH; currentX++) {
                             // Using the currentX value, draw a specific segment of the sentenceBitmap.

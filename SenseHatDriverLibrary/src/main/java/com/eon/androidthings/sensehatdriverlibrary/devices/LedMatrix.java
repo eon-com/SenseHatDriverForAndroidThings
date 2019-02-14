@@ -57,6 +57,9 @@ public class LedMatrix implements AutoCloseable {
 
     /**
      * Change the orientation of draws to the LED matrix.
+     *
+     * This is the global rotations value for standard draws to the LED matrix.
+     *
      * @param rotations The number of 90 degree rotations to apply to the matrix.
      */
     public void setRotation(@IntRange(from = -3,to = 3) final int rotations) {
@@ -102,7 +105,7 @@ public class LedMatrix implements AutoCloseable {
     }
 
     /**
-     * Draw the given drawable to the LED matrix.
+     * Draw the given drawable to the LED matrix. Uses the global rotations value.
      *
      * @param drawable Drawable to draw
      * @throws IOException
@@ -116,36 +119,59 @@ public class LedMatrix implements AutoCloseable {
     }
 
     /**
-     * Draw the given bitmap to the LED matrix.
+     * Draw the given drawable to the LED matrix with a specified rotations value.
+     *
+     * @param drawable Drawable to draw
+     * @param rotations An integer representing the amount of 90 degree rotations.
+     * @throws IOException
+     */
+    public void draw(@NonNull final Drawable drawable, final int rotations) throws IOException {
+        final Bitmap bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, WIDTH, HEIGHT);
+        drawable.draw(canvas);
+        this.draw(bitmap, rotations);
+    }
+
+    /**
+     * Draw the given bitmap to the LED matrix. Uses the global rotations value.
      *
      * @param bitmap Bitmap to draw
      * @throws IOException
      */
     public void draw(@NonNull final Bitmap bitmap) throws IOException {
         if (this.mPositioner.rotations != ROTATE_NONE) {
-            this.drawPositioned(bitmap, 0, 0, WIDTH, HEIGHT);
+            final Iterator<Position> iterator = mPositioner.iterator();
+            this.drawBitmapPositioned(bitmap, iterator);
             return;
         }
-        this.mBuffer[0] = 0;
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
-                int p = bitmap.getPixel(x, y);
-                float a = Color.alpha(p) / 255.f;
-                this.mBuffer[1 + x + WIDTH * 0 + 3 * WIDTH * y] = (byte) ((int) (Color.red(p) * a) >> 3);
-                this.mBuffer[1 + x + WIDTH * 1 + 3 * WIDTH * y] = (byte) ((int) (Color.green(p) * a) >> 3);
-                this.mBuffer[1 + x + WIDTH * 2 + 3 * WIDTH * y] = (byte) ((int) (Color.blue(p) * a) >> 3);
-            }
-        }
-        this.i2cDevice.write(this.mBuffer, this.mBuffer.length);
+        this.drawBitmap(bitmap);
     }
 
     /**
-     * Draw a range of the given bitmap to the LED matrix.
+     * Draw the given bitmap to the LED matrix with a specified rotations value.
+     *
      * @param bitmap Bitmap to draw
-     * @param startX
-     * @param startY
-     * @param width
-     * @param height
+     * @param rotations An integer representing the amount of 90 degree rotations.
+     * @throws IOException
+     */
+    public void draw(@NonNull final Bitmap bitmap, final int rotations) throws IOException {
+        if (rotations == ROTATE_NONE) {
+            this.drawBitmap(bitmap);
+        } else {
+            final Iterator<Position> iterator = mPositioner.iterator(rotations);
+            this.drawBitmapPositioned(bitmap, iterator);
+        }
+    }
+
+    /**
+     * Draw a range of the given bitmap to the LED matrix. Uses the global rotations value.
+     *
+     * @param bitmap Bitmap to draw
+     * @param startX Starting X position of the bitmap
+     * @param startY Starting Y position of the bitmap
+     * @param width Width in pixels from the starting X position
+     * @param height Height in pixels from the starting Y position
      * @throws IOException
      * @throws IllegalArgumentException
      */
@@ -164,18 +190,64 @@ public class LedMatrix implements AutoCloseable {
             throw new IllegalArgumentException(
                     "Invalid bounds; boundary out of bitmap dimension range.");
         }
-        this.drawPositioned(bitmap, startX, startY, width, height);
+        final Iterator<Position> iterator =
+                mPositioner.withBounds(startX, startY, width, height).iterator();
+        this.drawBitmapPositioned(bitmap, iterator);
+    }
+
+    /**
+     * Draw a range of the given bitmap to the LED matrix with a specified rotations value.
+     *
+     * @param bitmap Bitmap to draw
+     * @param startX Starting X position of the bitmap
+     * @param startY Starting Y position of the bitmap
+     * @param width Width in pixels from the starting X position
+     * @param height Height in pixels from the starting Y position
+     * @param rotations An integer representing the amount of 90 degree rotations.
+     * @throws IOException
+     * @throws IllegalArgumentException
+     */
+    public void draw(@NonNull final Bitmap bitmap,
+                     final int startX,
+                     final int startY,
+                     final int width,
+                     final int height,
+                     final int rotations) throws IOException {
+
+        if (width > WIDTH || height > HEIGHT) {
+            throw new IllegalArgumentException("Invalid bounds; too large for LED Matrix.");
+        } else if (startX < 0 || startY < 0
+                || (startX + width) > bitmap.getWidth()
+                || (startY + height) > bitmap.getHeight()) {
+
+            throw new IllegalArgumentException(
+                    "Invalid bounds; boundary out of bitmap dimension range.");
+        }
+        final Iterator<Position> iterator =
+                mPositioner.withBounds(startX, startY, width, height).iterator(rotations);
+        this.drawBitmapPositioned(bitmap, iterator);
     }
 
     // -------------------------------------------------------- Private Methods
 
-    private void drawPositioned(@NonNull final Bitmap bitmap,
-                                final int startX,
-                                final int startY,
-                                final int width,
-                                final int height) throws IOException {
+    private void drawBitmap(@NonNull final Bitmap bitmap) throws IOException {
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                int p = bitmap.getPixel(x, y);
+                float a = Color.alpha(p) / 255.f;
+                this.mBuffer[1 + x + WIDTH * 0 + 3 * WIDTH * y] = (byte) ((int) (Color.red(p) * a) >> 3);
+                this.mBuffer[1 + x + WIDTH * 1 + 3 * WIDTH * y] = (byte) ((int) (Color.green(p) * a) >> 3);
+                this.mBuffer[1 + x + WIDTH * 2 + 3 * WIDTH * y] = (byte) ((int) (Color.blue(p) * a) >> 3);
+            }
+        }
+        this.i2cDevice.write(this.mBuffer, this.mBuffer.length);
+    }
 
-        for (final Position position : mPositioner.withBounds(startX, startY, width, height)) {
+    private void drawBitmapPositioned(@NonNull final Bitmap bitmap,
+                                      final Iterator<Position> positionIterator) throws IOException {
+
+        while (positionIterator.hasNext()) {
+            final Position position = positionIterator.next();
             final int p = bitmap.getPixel(position.fromX, position.fromY);
             float a = Color.alpha(p) / 255.f;
             this.mBuffer[1 + position.toX + WIDTH * 0 + 3 * WIDTH * position.toY] =
@@ -188,6 +260,9 @@ public class LedMatrix implements AutoCloseable {
         this.i2cDevice.write(this.mBuffer, this.mBuffer.length);
     }
 
+    /**
+     * Iterable class for managing bitmap positioning and rotation during draws to the LED matrix.
+     */
     private static class Positioner implements Iterable<Position> {
 
         private int rotations = 0;
@@ -196,15 +271,36 @@ public class LedMatrix implements AutoCloseable {
         private int width = WIDTH;
         private int height = HEIGHT;
 
-        void setRotations(@IntRange(from = -3, to = 3) final int rotations) {
+        /**
+         * Normalize the given rotations value to the range of -3 to +3
+         *
+         * @param rotations An integer representing the amount of 90 degree rotations.
+         * @return The normalized rotations value.
+         */
+        int normalizeRotations(final int rotations) {
             if (rotations < 0) {
-                this.rotations = ((rotations < -3) ? rotations % 4 : rotations) + 4;
+                return ((rotations < -3) ? rotations % 4 : rotations) + 4;
             } else {
-                this.rotations = (rotations > 3) ? rotations % 4 : rotations;
+                return (rotations > 3) ? rotations % 4 : rotations;
             }
         }
 
-        OnPositionListener createListener() {
+        /**
+         * Set the default rotations value for this positioner.
+         *
+         * @param rotations An integer representing the amount of 90 degree rotations.
+         */
+        void setRotations(@IntRange(from = -3, to = 3) final int rotations) {
+            this.rotations = normalizeRotations(rotations);
+        }
+
+        /**
+         * Creates a new OnPositionListener for managing coordinate logic in the Positioner's iterator.
+         *
+         * @param rotations An integer representing the amount of 90 degree rotations.
+         * @return The requested OnPositionListener for the given rotations.
+         */
+        OnPositionListener createListener(final int rotations) {
             switch (rotations) {
                 case 1: // ROTATE_CW1, ROTATE_CCW3
                     return new OnPositionListener() {
@@ -275,6 +371,15 @@ public class LedMatrix implements AutoCloseable {
             }
         }
 
+        /**
+         * Set the bounds of the next PositionIterator created.
+         *
+         * @param startX Starting X position
+         * @param startY Starting Y position
+         * @param width Width in pixels from the starting X position
+         * @param height Height in pixels from the starting Y position
+         * @return This positioner.
+         */
         Positioner withBounds(final int startX, final int startY, final int width, final int height) {
             this.startX = startX;
             this.startY = startY;
@@ -283,17 +388,42 @@ public class LedMatrix implements AutoCloseable {
             return this;
         }
 
-        @Override
-        public Iterator<Position> iterator() {
+        /**
+         * Create a new PositionIterator using a specified rotations value.
+         *
+         * @param rotations An integer representing the amount of 90 degree rotations.
+         * @return The requested PositionIterator.
+         */
+        Iterator<Position> createIterator(final int rotations) {
             final PositionIterator iterator;
             if (startX > -1 || startY > -1) {
-                iterator = new PositionIterator(createListener(), startX, startY, width, height);
+                iterator = new PositionIterator(createListener(rotations), startX, startY, width, height);
                 startX = -1;
                 startY = -1;
             } else {
-                iterator = new PositionIterator(createListener());
+                iterator = new PositionIterator(createListener(rotations));
             }
             return iterator;
+        }
+
+        /**
+         * Create a new PositionIterator. Uses the global rotations value.
+         *
+         * @return The requested PositionIterator.
+         */
+        @Override
+        public Iterator<Position> iterator() {
+            return createIterator(this.rotations);
+        }
+
+        /**
+         * Create a new PositionIterator using a specified rotations value.
+         *
+         * @param rotations An integer representing the amount of 90 degree rotations.
+         * @return The requested PositionIterator.
+         */
+        public Iterator<Position> iterator(final int rotations) {
+            return createIterator(normalizeRotations(rotations));
         }
 
     }
